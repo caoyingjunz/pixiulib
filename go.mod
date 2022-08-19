@@ -1,4 +1,4 @@
-module github.com/caoyingjunz/libpixiu
+module github.com/caoyingjunz/pixiulib
 
 go 1.14
 

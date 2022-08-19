@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/caoyingjunz/libpixiu/config"
+	"github.com/caoyingjunz/pixiulib/config"
 )
 
 type Config struct {
