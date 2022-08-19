@@ -1,11 +1,3 @@
-# Libpixiu
-
-Library and tools for pixiu
-
-## BindConfig
-- 完成 `yaml` 配置文件的加载
-
-```go
 package main
 
 import (
@@ -35,5 +27,3 @@ func main() {
 
 	fmt.Println(cfg)
 }
-```
-[Code demo](./examples/config/main.go)
