@@ -18,6 +18,7 @@ package exec
 
 import (
 	"context"
+	"encoding/json"
 	"io"
 	osexec "os/exec"
 	"syscall"
@@ -54,6 +55,8 @@ type Cmd interface {
 	// CombinedOutput runs the command and returns its combined standard output
 	// and standard error. This follows the pattern of package os/exec.
 	CombinedOutput() ([]byte, error)
+	// RunAndUnmarshalOutput runs the command and unmarshal its combined output
+	RunAndUnmarshalOutput(v interface{}) error
 	// Output runs the command and returns standard output, but not standard err
 	Output() ([]byte, error)
 	SetDir(dir string)
@@ -166,6 +169,17 @@ func (cmd *cmdWrapper) Run() error {
 func (cmd *cmdWrapper) CombinedOutput() ([]byte, error) {
 	out, err := (*osexec.Cmd)(cmd).CombinedOutput()
 	return out, handleError(err)
+}
+
+func (cmd *cmdWrapper) RunAndUnmarshalOutput(v interface{}) error {
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		return err
+	}
+	if err = json.Unmarshal(out, v); err != nil {
+		return handleError(err)
+	}
+	return nil
 }
 
 func (cmd *cmdWrapper) Output() ([]byte, error) {
